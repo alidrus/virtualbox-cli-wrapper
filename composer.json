@@ -1,0 +1,12 @@
+{
+    "require": {
+        "symfony/console": "^3.0",
+        "symfony/process": "^3.0"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "XDMS\\": "src"
+        }
+    }
+}
