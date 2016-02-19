@@ -11,7 +11,7 @@ class ParseOutput
     /**
      * Parse output as vm listing (list vms).
      */
-    public function asVMListing(Array $rawOutput)
+    public static function asVMListing(Array $rawOutput)
     {
         $vmListing = array_map(function ($line) {
             if (preg_match('/^\"([^\"]+)\" \{([^\}]+)\}$/', trim($line), $parts))
@@ -28,7 +28,7 @@ class ParseOutput
     /**
      * Parse output as vm info (showvminfo)
      */
-    public function asVMInfo(Array $rawOutput)
+    public static function asVMInfo(Array $rawOutput)
     {
         $vmInfo = [];
 
@@ -48,7 +48,7 @@ class ParseOutput
     /**
      * Parse output as extradata value (getextradata)
      */
-    public function asExtraData(Array $rawOutput)
+    public static function asExtraData(Array $rawOutput)
     {
         foreach($rawOutput as $line)
         {

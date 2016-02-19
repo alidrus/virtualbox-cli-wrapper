@@ -10,15 +10,15 @@ use Symfony\Component\Process\Process;
  */
 class CommandPath
 {
-    private $fullPath;
+    private $commandPath;
 
     /**
      * Constructor for the CommandPath class.
      *
      **/
-    private function __construct($fullPath)
+    private function __construct($commandPath)
     {
-        $this->fullPath = $fullPath;
+        $this->commandPath = $commandPath;
     }
 
     /**
@@ -40,8 +40,8 @@ class CommandPath
      * Get full path of the command.
      *
      */
-    public function fullPath()
+    public function get()
     {
-        return $this->fullPath;
+        return $this->commandPath;
     }
 }

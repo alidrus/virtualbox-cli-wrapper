@@ -11,7 +11,7 @@ class Copyright
     /**
      * Get copyright message.
      */
-    public function get()
+    public static function get()
     {
         $years = '2016'.( date('Y') > '2016' ? ' - '.@date('Y') : '' );
 

@@ -15,7 +15,7 @@ class VBoxManage
 {
     const COMMAND = 'VBoxManage';
 
-    private $command;
+    private $commandPath;
 
     private $directives = '';
 
@@ -24,9 +24,9 @@ class VBoxManage
     /**
      * Class constructor receives the command as an argument.
      */
-    private function __construct($command)
+    private function __construct($commandPath)
     {
-        $this->command = $command;
+        $this->commandPath = $commandPath;
     }
 
     /**
@@ -35,14 +35,14 @@ class VBoxManage
      */
     public static function create($directives = '')
     {
-        $command = CommandPath::command(self::COMMAND);
+        $commandPath = CommandPath::command(self::COMMAND);
 
-        if ($command === null)
+        if ($commandPath === null)
         {
             return null;
         }
 
-        $instance = new static($command);
+        $instance = new static($commandPath);
 
         return strlen($directives) > 0
             ? $instance->setDirective($directives)
@@ -68,7 +68,7 @@ class VBoxManage
      */
     public function run()
     {
-        $process = new Process($this->command->fullPath().' '.$this->directives);
+        $process = new Process($this->commandPath->get().' '.$this->directives);
 
         $process->run();
 

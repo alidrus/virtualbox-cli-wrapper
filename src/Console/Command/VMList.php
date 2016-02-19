@@ -24,13 +24,7 @@ class VMList extends Command
     public function configure()
     {
         $this->setName('vm:list')
-             ->setDescription('List virtual machines')
-             ->addOption(
-                 'show-state',
-                 null,
-                 InputOption::VALUE_NONE | InputOption::VALUE_OPTIONAL,
-                 'If set, the state of the virtual machine will be shown.'
-             );
+             ->setDescription('List virtual machines');
     }
 
     /**
