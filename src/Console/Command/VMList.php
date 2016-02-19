@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
 
 use XDMS\Console\VMListing;
-use XDMS\Console\Copyright;
+use XDMS\Copyright;
 
 /**
  * Class VMList
@@ -23,7 +23,7 @@ class VMList extends Command
      */
     public function configure()
     {
-        $this->setName('vmlist')
+        $this->setName('vm:list')
              ->setDescription('List virtual machines')
              ->addOption(
                  'show-state',

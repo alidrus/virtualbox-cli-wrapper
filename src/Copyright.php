@@ -1,6 +1,6 @@
 <?php
 
-namespace XDMS\Console;
+namespace XDMS;
 
 /**
  * Class Copyright
@@ -13,6 +13,8 @@ class Copyright
      */
     public function get()
     {
-        return 'Copyright (c) 2016 '.( @date('Y') > '2016' ? '- '.@date('Y') : '' ).', XDMS Sdn Bhd. All rights reserved.';
+        $years = '2016'.( date('Y') > '2016' ? ' - '.@date('Y') : '' );
+
+        return 'Copyright (c) '.$years.', XDMS Sdn Bhd. All rights reserved.';
     }
 }
