@@ -6,7 +6,7 @@ require __DIR__.'/vendor/autoload.php';
 use XDMS\Console\Command\VMList;
 use Symfony\Component\Console\Application;
 
-$app = new Application();
+$app = new Application('XDMS Command Line Tool', '1.0');
 
 $app->add(new VMList());
 
