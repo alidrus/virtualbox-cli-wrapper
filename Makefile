@@ -6,13 +6,13 @@ SOURCEDIR = src
 
 SOURCES := $(shell find $(SOURCEDIR) -name '*.php')
 
-all: xdms.phar
+all: vbox.phar
 
-xdms.phar: xdms box.json $(SOURCES)
+vbox.phar: vbox box.json $(SOURCES)
 	box build -v
 
-install: xdms.phar
-	install -m 0755 -T xdms.phar $(HOME)/bin/xdms
+install: vbox.phar
+	install -m 0755 -T vbox.phar $(HOME)/bin/vbox
 
-clean: xdms.phar
-	rm -f xdms.phar
+clean:
+	rm -f vbox.phar

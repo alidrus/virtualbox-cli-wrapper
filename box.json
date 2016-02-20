@@ -10,8 +10,8 @@
         }
     ],
     "git-version": "package_version",
-    "main": "xdms",
-    "output": "xdms.phar",
+    "main": "vbox",
+    "output": "vbox.phar",
     "shebang": "#!/usr/bin/env php",
     "stub": true
 }

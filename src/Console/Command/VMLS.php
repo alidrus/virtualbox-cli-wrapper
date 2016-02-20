@@ -13,17 +13,17 @@ use XDMS\Console\VMListing;
 use XDMS\Copyright;
 
 /**
- * Class VMList
+ * Class VMLS
  * @author Abu Bakar Al-Idrus
  */
-class VMList extends Command
+class VMLS extends Command
 {
     /**
      *
      */
     public function configure()
     {
-        $this->setName('vm:list')
+        $this->setName('ls')
              ->setDescription('List virtual machines');
     }
 

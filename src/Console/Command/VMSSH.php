@@ -26,10 +26,10 @@ class VMSSH extends Command
      */
     public function configure()
     {
-        $this->setName('vm:ssh')
+        $this->setName('ssh')
              ->setDescription('Connect to virtual machine by VM#.')
              ->addOption(
-                 'options',
+                 'custom-options',
                  null,
                  InputOption::VALUE_REQUIRED,
                  'Options to pass to SSH command.',
@@ -53,7 +53,7 @@ class VMSSH extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // Get options
-        $options = $input->getOption('options');
+        $customOptions = $input->getOption('custom-options');
 
         // Get arguments
         $vmNum    = $input->getArgument('vm-number');
@@ -68,7 +68,7 @@ class VMSSH extends Command
             $commandPath->get(),
             self::PORT_START + intval($vmNum),
             $username
-        ).($options !== false ? ' '.$options : '');
+        ).($customOptions !== false ? ' '.$customOptions : '');
 
         // Execute it
         passthru($command);

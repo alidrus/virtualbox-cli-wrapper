@@ -3,13 +3,13 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-use XDMS\Console\Command\VMList;
-use XDMS\Console\Command\VMSSH;
 use Symfony\Component\Console\Application;
+use XDMS\Console\Command\VMLS;
+use XDMS\Console\Command\VMSSH;
 
-$app = new Application('XDMS Command Line Tool', '1.0');
+$app = new Application('VirtualBox Command Line Wrapper', '0.2.1');
 
-$app->add(new VMList());
+$app->add(new VMLS());
 $app->add(new VMSSH());
 
 $app->run();
