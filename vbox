@@ -9,7 +9,7 @@ use XDMS\Console\Command\Start;
 use XDMS\Console\Command\SSH;
 use XDMS\Console\Command\Suspend;
 
-$app = new Application('VirtualBox Command Line Wrapper', '0.2.1');
+$app = new Application('VirtualBox Command Line Wrapper', '0.4.1');
 
 $app->add(new LS());
 $app->add(new Start());
