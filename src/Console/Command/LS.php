@@ -13,10 +13,10 @@ use XDMS\Console\VMListing;
 use XDMS\Copyright;
 
 /**
- * Class VMLS
+ * Class LS
  * @author Abu Bakar Al-Idrus
  */
-class VMLS extends Command
+class LS extends Command
 {
     /**
      *

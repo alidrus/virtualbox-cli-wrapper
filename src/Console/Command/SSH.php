@@ -13,10 +13,10 @@ use XDMS\Copyright;
 use XDMS\Console\CommandPath;
 
 /**
- * Class VMSSH
+ * Class SSH
  * @author Abu Bakar Al-Idrus
  */
-class VMSSH extends Command
+class SSH extends Command
 {
     const PORT_START = 52200;
     const COMMAND    = 'ssh';
