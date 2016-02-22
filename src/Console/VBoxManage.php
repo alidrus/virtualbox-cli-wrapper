@@ -9,6 +9,9 @@ use XDMS\Console\CommandPath;
 
 /**
  * Class VBoxManage
+ *
+ * A wrapper class around the VBoxManage command.
+ *
  * @author Abu Bakar Al-Idrus
  */
 class VBoxManage
