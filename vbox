@@ -7,12 +7,14 @@ use Symfony\Component\Console\Application;
 use XDMS\Console\Command\LS;
 use XDMS\Console\Command\Start;
 use XDMS\Console\Command\SSH;
+use XDMS\Console\Command\Suspend;
 
 $app = new Application('VirtualBox Command Line Wrapper', '0.2.1');
 
 $app->add(new LS());
 $app->add(new Start());
 $app->add(new SSH());
+$app->add(new Suspend());
 
 $app->run();
 
