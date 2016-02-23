@@ -1,0 +1,9 @@
+TO DO List:
+
+(1) Create .VBoxCLI configuration file in home directory store VM# for virtual
+    machines in there.
+(2) Automatic numbering command that can sort by UUID or Name and write the VM#
+    list into configuration file.
+(3) Manual numbering command to assign VM# to virtual machines based on UUID.
+(4) Warn when one or more virtual machines have no VM#. Suggest to run
+    automatic or manual numbering.
