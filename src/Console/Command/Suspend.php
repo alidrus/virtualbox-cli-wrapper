@@ -45,6 +45,9 @@ class Suspend extends Command
         // Get arguments
         $vmNum    = $input->getArgument('vm-number');
 
+        // Get vm information
+        $output->writeln('<info>Getting information for virtual machine #'.$vmNum.'</info>');
+
         // Get list of virtual machines
         $vms = array_filter(VMListing::get($output), function ($vm) use ($vmNum) {
             return intval($vm['vmNum']) === intval($vmNum);
@@ -59,6 +62,8 @@ class Suspend extends Command
 
         // Get first match
         $vm = array_pop($vms);
+
+        $output->writeln('<info>Attempting to suspend virtual machine named "'.$vm['name'].'"</info>');
 
         // Construct VBoxManage command for suspending a running vm.
         $vmSuspend = VBoxManage::create(sprintf(self::DIRECTIVE, $vm['uuid']));

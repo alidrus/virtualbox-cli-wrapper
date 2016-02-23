@@ -45,6 +45,9 @@ class Start extends Command
         // Get arguments
         $vmNum    = $input->getArgument('vm-number');
 
+        // Get vm information
+        $output->writeln('<info>Getting information for virtual machine #'.$vmNum.'</info>');
+
         // Get list of virtual machines
         $vms = array_filter(VMListing::get($output), function ($vm) use ($vmNum) {
             return intval($vm['vmNum']) === intval($vmNum);
@@ -60,10 +63,10 @@ class Start extends Command
         // Get first match
         $vm = array_pop($vms);
 
+        $output->writeln('<info>Attempting to start virtual machine named "'.$vm['name'].'"</info>');
+
         // Construct VBoxManage command for starting vm.
         $vmStart = VBoxManage::create(sprintf(self::DIRECTIVE, $vm['uuid']));
-
-        $output->writeln('<info>Attempting to start virtual machine named "'.$vm['name'].'"</info>');
 
         $vmStart->start();
 
@@ -86,8 +89,7 @@ class Start extends Command
 
         if ($vmStart->isSuccessful())
         {
-            $outputLines = $vmStart->getOutput();
-            $output->writeln("\n<info>".trim(array_pop($outputLines)).'</info>');
+            $output->writeln("\n<info>Virtual machine started.</info>");
             exit(0);
         }
 
