@@ -73,6 +73,9 @@ class SSH extends Command
             $username
         ).($customOptions !== false ? ' '.$customOptions : '');
 
+        // Flush and disable output buffering for a more responsive connection
+        ob_end_flush();
+
         // Execute it
         passthru($command);
     }
