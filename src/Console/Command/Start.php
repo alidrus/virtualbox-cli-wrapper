@@ -1,16 +1,16 @@
 <?php
 
-namespace XDMS\Console\Command;
+namespace VBoxCLI\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\ProgressBar;
 
-use XDMS\Console\VBoxManage;
-use XDMS\Console\VMListing;
+use VBoxCLI\Console\VBoxManage;
+use VBoxCLI\Console\VMListing;
 
 /**
  * Class Start
@@ -39,6 +39,9 @@ class Start extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        // Set ansi output on by default
+        $output->setDecorated(true);
+
         // Get arguments
         $vmNum    = $input->getArgument('vm-number');
 
@@ -60,13 +63,36 @@ class Start extends Command
         // Construct VBoxManage command for starting vm.
         $vmStart = VBoxManage::create(sprintf(self::DIRECTIVE, $vm['uuid']));
 
-        if (!$vmStart->run())
+        $output->writeln('<info>Attempting to start virtual machine named "'.$vm['name'].'"</info>');
+
+        $vmStart->start();
+
+        $progress = new ProgressBar($output);
+        $progress->setFormat('[ %bar% ] [ Time Elapsed: %elapsed:6s% ]');
+        $progress->start();
+
+        $counter=0;
+        while($vmStart->isRunning())
         {
-            $output->writeln('<error>Unable to start vm!</error>');
-            exit(2);
+            if ($counter % 5000 === 0)
+            {
+                $progress->advance();
+            }
+
+            $counter++;
         }
 
-        var_dump($vmStart->getOutput());
+        $progress->finish();
+
+        if ($vmStart->isSuccessful())
+        {
+            $outputLines = $vmStart->getOutput();
+            $output->writeln("\n<info>".trim(array_pop($outputLines)).'</info>');
+            exit(0);
+        }
+
+        $output->writeln("\n".'<error>Virtual machine failed to start!</error>');
+        exit(1);
     }
 }
 

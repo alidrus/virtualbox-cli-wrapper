@@ -1,6 +1,6 @@
 <?php
 
-namespace XDMS\Console;
+namespace VBoxCLI\Console;
 
 use Symfony\Component\Console\Output\OutputInterface;
 

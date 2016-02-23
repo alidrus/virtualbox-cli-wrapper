@@ -1,6 +1,6 @@
 <?php
 
-namespace XDMS\Console\Command;
+namespace VBoxCLI\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -9,8 +9,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
 
-use XDMS\Copyright;
-use XDMS\Console\CommandPath;
+use VBoxCLI\Copyright;
+use VBoxCLI\Console\CommandPath;
 
 /**
  * Class SSH
@@ -52,6 +52,9 @@ class SSH extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        // Set ansi output on by default
+        $output->setDecorated(true);
+
         // Get options
         $customOptions = $input->getOption('custom-options');
 

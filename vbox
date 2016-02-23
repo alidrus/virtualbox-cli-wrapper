@@ -4,10 +4,11 @@
 require __DIR__.'/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
-use XDMS\Console\Command\LS;
-use XDMS\Console\Command\Start;
-use XDMS\Console\Command\SSH;
-use XDMS\Console\Command\Suspend;
+use VBoxCLI\Console\Command\LS;
+use VBoxCLI\Console\Command\Start;
+use VBoxCLI\Console\Command\SSH;
+use VBoxCLI\Console\Command\Suspend;
+use VBoxCLI\Console\Command\License;
 
 $app = new Application('VirtualBox Command Line Wrapper', '0.4.1');
 
@@ -15,6 +16,7 @@ $app->add(new LS());
 $app->add(new Start());
 $app->add(new SSH());
 $app->add(new Suspend());
+$app->add(new License());
 
 $app->run();
 

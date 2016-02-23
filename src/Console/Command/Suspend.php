@@ -1,16 +1,16 @@
 <?php
 
-namespace XDMS\Console\Command;
+namespace VBoxCLI\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\ProgressBar;
 
-use XDMS\Console\VBoxManage;
-use XDMS\Console\VMListing;
+use VBoxCLI\Console\VBoxManage;
+use VBoxCLI\Console\VMListing;
 
 /**
  * Class Suspend
@@ -39,6 +39,9 @@ class Suspend extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        // Set ansi output on by default
+        $output->setDecorated(true);
+
         // Get arguments
         $vmNum    = $input->getArgument('vm-number');
 
@@ -60,13 +63,33 @@ class Suspend extends Command
         // Construct VBoxManage command for suspending a running vm.
         $vmSuspend = VBoxManage::create(sprintf(self::DIRECTIVE, $vm['uuid']));
 
-        if (!$vmSuspend->run())
+        $vmSuspend->start();
+
+        $progress = new ProgressBar($output);
+        $progress->setFormat('[ %bar% ] [ Time Elapsed: %elapsed:6s% ]');
+        $progress->start();
+
+        $counter=0;
+        while($vmSuspend->isRunning())
         {
-            $output->writeln('<error>Unable to suspend vm!</error>');
-            exit(2);
+            if ($counter % 5000 === 0)
+            {
+                $progress->advance();
+            }
+
+            $counter++;
         }
 
-        var_dump($vmSuspend->getOutput());
+        $progress->finish();
+
+        if ($vmSuspend->isSuccessful())
+        {
+            $output->writeln("\n<info>Virtual machine suspended.</info>");
+            exit(0);
+        }
+
+        $output->writeln("\n".'<error>Failed to suspend virtual machine!</error>');
+        exit(1);
     }
 }
 

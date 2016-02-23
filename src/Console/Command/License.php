@@ -9,21 +9,21 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
 
-use VBoxCLI\Console\VMListing;
+use VBoxCLI\LicenseText;
 
 /**
- * Class LS
+ * Class License
  * @author Abu Bakar Al-Idrus
  */
-class LS extends Command
+class License extends Command
 {
     /**
      *
      */
     public function configure()
     {
-        $this->setName('ls')
-             ->setDescription('List virtual machines');
+        $this->setName('license')
+             ->setDescription('Display software license');
     }
 
     /**
@@ -34,20 +34,11 @@ class LS extends Command
         // Set ansi output on by default.
         $output->setDecorated(true);
 
-        $vms = VMListing::get($output);
-
-        usort($vms, function ($a, $b) {
-            return $a['vmNum'] === $b['vmNum'] ? 0
-                   : ( $a['vmNum'] < $b['vmNum'] ? -1 : 1 );
-        });
-
-        $output->writeln('<info>Virtual Machine Listing</info>');
-
-        $table = new Table($output);
-
-        $table->setHeaders(['VM#', 'VM Name', 'UUID', 'State'])
-              ->setRows($vms)
-              ->render();
+        // Get and display license text.
+        $output->writeln('<info>'.LicenseText::get().'</info>');
     }
-
 }
+
+/**
+ * vim: syntax=php expandtab tabstop=4 shiftwidth=4 softtabstop=4:
+ */

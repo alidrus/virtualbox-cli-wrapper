@@ -1,11 +1,11 @@
 <?php
 
-namespace XDMS\Console;
+namespace VBoxCLI\Console;
 
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
-use XDMS\Console\CommandPath;
+use VBoxCLI\Console\CommandPath;
 
 /**
  * Class VBoxManage
@@ -83,6 +83,41 @@ class VBoxManage
         $this->setOutput($process->getOutput());
 
         return true;
+    }
+
+    /**
+     * Execute the VBoxManage command asynchronously.
+     *
+     */
+    public function start()
+    {
+        $this->process = new Process($this->commandPath->get().' '.$this->directives);
+
+        $result = $this->process->start();
+
+        return true;
+    }
+
+    /**
+     * Check if command is still running.
+     */
+    public function isRunning()
+    {
+        $isRunning = $this->process->isRunning();
+
+        if ($isRunning)
+        {
+            return true;
+        }
+
+        $this->setOutput($this->process->getOutput());
+
+        return false;
+    }
+
+    public function isSuccessful()
+    {
+        return $this->process->isSuccessful();
     }
 
     /**
