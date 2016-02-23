@@ -7,3 +7,5 @@ TO DO List:
 (3) Manual numbering command to assign VM# to virtual machines based on UUID.
 (4) Warn when one or more virtual machines have no VM#. Suggest to run
     automatic or manual numbering.
+(5) Compose a README.md file for github once we are ready to export the project
+    there.
