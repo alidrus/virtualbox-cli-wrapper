@@ -77,8 +77,28 @@ class SSH extends Command
         ob_start();
         ob_end_flush();
 
-        // Execute ssh connection.
-        passthru($command);
-    }
+        $maxTries  = 3;
+        $returnVar = 1;
+        $tryCount  = 0;
 
+        while($returnVar !== 0 && $tryCount < $maxTries)
+        {
+            if ($tryCount > 0)
+            {
+                echo "Failed to connect. Retrying in 2 seconds.\n";
+                sleep(2);
+            }
+
+            // Execute ssh connection.
+            passthru($command, $returnVar);
+
+            if ($returnVar !== 0 && $tryCount >= ($maxTries - 1))
+            {
+                echo "Giving up... sorry.\n";
+            }
+
+            // Increment try count
+            $tryCount++;
+        }
+    }
 }
