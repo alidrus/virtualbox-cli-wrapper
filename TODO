@@ -1,11 +1,36 @@
 TO DO List:
+-----------
 
-(1) Create .VBoxCLI configuration file in home directory store VM# for virtual
-    machines in there.
-(2) Automatic numbering command that can sort by UUID or Name and write the VM#
-    list into configuration file.
-(3) Manual numbering command to assign VM# to virtual machines based on UUID.
-(4) Warn when one or more virtual machines have no VM#. Suggest to run
-    automatic or manual numbering.
-(5) Compose a README.md file for github once we are ready to export the project
+(1) .VBoxCLI
+
+    Configuration file in home directory store VM# for virtual machines in.
+
+(2) register auto [ --by-uuid | --by-name ]
+
+    Automatic VM# configuration that sorts virtual machines by UUID or Name and
+    writes the VM# list into the .VBoxCLI configuration file. Default is sort
+    by name.
+
+(3) register set <uuid> <vm#>
+
+    Manual VM# configuration that stores user's settings into .VBoxCLI
+    configuration file.
+
+(4) No VM# warning
+
+    Warn when one or more virtual machines have no VM#. Suggest to run
+    automatic or manual numbering. Error message when none of the machines are
+    numbered.
+
+(5) README.md
+
+    Compose a README.md file for github once we are ready to export the project
     there.
+
+(6) Create and enhance more commands:
+
+    - shutdown (acpi button)
+    - poweroff
+    - ls -r (list running vms)
+    - info <VM#> (take output from "VBoxManage showvminfo <uuid> --machinereadable"
+     and present in tabular form)
