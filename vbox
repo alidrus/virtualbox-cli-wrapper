@@ -4,6 +4,7 @@
 require __DIR__.'/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
+use VBoxCLI\Console\Command\Config;
 use VBoxCLI\Console\Command\LS;
 use VBoxCLI\Console\Command\Start;
 use VBoxCLI\Console\Command\SSH;
@@ -12,6 +13,7 @@ use VBoxCLI\Console\Command\License;
 
 $app = new Application('VirtualBox Command Line Wrapper', '0.5.1');
 
+$app->add(new Config());
 $app->add(new LS());
 $app->add(new Start());
 $app->add(new SSH());

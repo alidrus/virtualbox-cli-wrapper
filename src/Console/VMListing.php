@@ -43,12 +43,7 @@ class VMListing
                          ? $vmStatus->getOutput('vminfo')['VMState']
                          : '';
 
-            $extraData = VBoxManage::create()
-                       ->setDirective('getextradata {'.$vm['uuid'].'} vmNum');
-
-            $extraData->run();
-
-            $vm = [ 'vmNum' => $extraData->getOutput('extradata') ]
+            $vm = [ 'vmNum' => (string) Config::get($vm['uuid'], 'vmNum') ]
                 + $vm;
         });
 
