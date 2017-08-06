@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Helper\Table;
 
 use VBoxCLI\Console\Config as Configuration;
 
@@ -46,6 +46,9 @@ class Config extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        // Set ansi output on by default.
+        $output->setDecorated(true);
+
         // Get arguments
         $uuid      = $input->getArgument('uuid');
         $parameter = $input->getArgument('parameter');
@@ -53,17 +56,33 @@ class Config extends Command
 
         if ($parameter === null)
         {
-            var_dump(Configuration::get($uuid));
+            $list = [];
+            foreach (Configuration::get($uuid) as $key => $val)
+            {
+                $list[] = array($key, $val);
+            }
+
+            $table = new Table($output);
+
+            $table->setHeaders(['Parameter', 'Value'])
+                  ->setRows($list)
+                  ->render();
+
             exit(0);
         }
 
         if ($value === null)
         {
-            var_dump(Configuration::get($uuid, $parameter));
+            $output->writeln(sprintf("Value for %s is: %s", $parameter, Configuration::get($uuid, $parameter)));
+
             exit(0);
         }
 
-        Configuration::set($uuid, $parameter, $value);
+        $result = Configuration::set($uuid, $parameter, $value);
+        $tag = $result === false ? 'error' : 'info';
+        $message = $result === false ? 'Unable to set configuration.' : 'Configuration has been set.';
+
+        $output->writeln('<'.$tag.'>'.$message.'</'.$tag.'>');
 
         exit(0);
     }
