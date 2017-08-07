@@ -9,8 +9,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
 
-use VBoxCLI\Copyright;
 use VBoxCLI\Console\CommandPath;
+use VBoxCLI\Console\Config;
 
 /**
  * Class SSH
@@ -18,7 +18,6 @@ use VBoxCLI\Console\CommandPath;
  */
 class SSH extends Command
 {
-    const PORT_START = 52200;
     const COMMAND    = 'ssh';
 
     /**
@@ -62,15 +61,45 @@ class SSH extends Command
         $vmNum    = $input->getArgument('vm-number');
         $username = $input->getArgument('username');
 
+        // Get VM configuration list
+        $list = Config::get();
+
+        if ($list === null)
+        {
+            $output->writeln('<error>VM with vmNum '.$vmNum.' does not exist.</error>');
+        }
+
+        // Get SSH host and port
+        $sshPort = null;
+        $sshHost = null;
+        foreach($list as $uuid => $config)
+        {
+            if (array_key_exists('vmNum', $config)
+                && $vmNum === $config['vmNum']
+                && array_key_exists('sshHost', $config)
+                && array_key_exists('sshPort', $config))
+            {
+                $sshHost = $config['sshHost'];
+                $sshPort = $config['sshPort'];
+                break;
+            }
+        }
+
+        if ($sshHost === null || $sshPort === null)
+        {
+            $output->writeln('<error>VM with vmNum '.$vmNum.' does not have a complete SSH configuration.</error>');
+        }
+
         // Get full path for SSH executable.
         $commandPath = CommandPath::command(self::COMMAND);
 
         // Construct ssh command line.
         $command = sprintf(
-            '%s -p %d -l %s localhost',
+            '%s -p %d -l %s %s',
             $commandPath->get(),
-            self::PORT_START + intval($vmNum),
-            $username
+            $sshPort,
+            $username,
+            $sshHost
         ).($customOptions !== false ? ' '.$customOptions : '');
 
         // Make sure no output buffering happens.
@@ -83,7 +112,10 @@ class SSH extends Command
 
         while($returnVar !== 0 && $tryCount < $maxTries)
         {
-            if ($tryCount > 0)
+            // Increment try count
+            $tryCount++;
+
+            if ($tryCount > 1)
             {
                 echo "Failed to connect. Retrying in 2 seconds.\n";
                 sleep(2);
@@ -92,13 +124,10 @@ class SSH extends Command
             // Execute ssh connection.
             passthru($command, $returnVar);
 
-            if ($returnVar !== 0 && $tryCount >= ($maxTries - 1))
+            if ($returnVar !== 0 && $tryCount >= $maxTries)
             {
                 echo "Giving up... sorry.\n";
             }
-
-            // Increment try count
-            $tryCount++;
         }
     }
 }
