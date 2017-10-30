@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
 
 use VBoxCLI\Console\CommandPath;
-use VBoxCLI\Console\Config;
+use VBoxCLI\Console\Config as VBConfig;
 
 /**
  * Class SSH
@@ -62,7 +62,7 @@ class SSH extends Command
         $username = $input->getArgument('username');
 
         // Get VM configuration list
-        $list = Config::get();
+        $list = VBConfig::get();
 
         if ($list === null)
         {
