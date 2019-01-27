@@ -1,3 +1,4 @@
 vendor
 vbox.phar
 test*.php
+composer.lock
