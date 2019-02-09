@@ -26,7 +26,7 @@ class Start extends Command
     public function configure()
     {
         $this->setName('start')
-             ->setDescription('Start virtual by VM#.')
+             ->setDescription('Start virtual machine by VM#.')
              ->addArgument(
                  'vm-number',
                  InputArgument::REQUIRED,
