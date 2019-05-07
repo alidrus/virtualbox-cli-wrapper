@@ -1,2 +1,3 @@
 # virtualbox-cli-wrapper
-A command line wrapper for VBoxManage written in PHP. Currently only supports starting, suspending and listing in a more CLI-user friendly way.
+
+A command line wrapper for VBoxManage written in PHP. The whole idea is to simplify running virtual machines for the most common use instead of using VBoxManage which is quite complex. It currently only supports listing VMs, starting VMs, suspending VMs and modifying settings its own configuration file.
