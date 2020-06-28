@@ -56,6 +56,12 @@ class Config extends Command
 
         if ($parameter === null)
         {
+            if (Configuration::get($uuid) === null)
+            {
+                $output->writeln('<error>The VM\'s configuration is blank.</error>');
+                exit(1);
+            }
+
             $list = [];
             foreach (Configuration::get($uuid) as $key => $val)
             {
